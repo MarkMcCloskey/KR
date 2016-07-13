@@ -1,5 +1,6 @@
-/*This is a copy and paste from section 1.2.  It will iterate over a set number of
-fahrenheit temperatures and convert them to celsius*/
+/*This is a copy and paste from section 1.2.  This is the second temperature converter in 
+  section 1.2 it will convert from Fahrenheit to Celsius and print a formatted decimal 
+  temperature. */
 
 #import <stdio.h>
 
@@ -8,7 +9,7 @@ fahrenheit temperatures and convert them to celsius*/
 
 main(){
 
-  int fahr, celsius;
+  float fahr, celsius;
   int lower, upper, step;
 
   lower = 0;   /* lower limit of temperature table*/
@@ -17,8 +18,8 @@ main(){
 
   fahr = lower;
   while( fahr <= upper ){
-    celsius = 5 * (fahr-32) / 9;
-    printf( "%d\t%d\n", fahr, celsius);
+    celsius = (5.0/9.0) * (fahr-32.0);
+    printf( "%3.0f %6.1f\n", fahr, celsius);
     fahr = fahr + step;
   }
    
