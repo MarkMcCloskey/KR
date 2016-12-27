@@ -12,8 +12,8 @@ int main(int argc, char* argv[]){
 	char cmin = 0;
 	char cmax = 0;
 	short smin= -1 ,smax = 1;
-	int imin = 0,imax = 0;
-	long lmin = 0 , lmax = 0;
+	int imin = -1, imax = 1 ;
+	long lmin = -1 , lmax = 1;
 	
 
 	printf("First, the printed library values:\n");
@@ -27,12 +27,12 @@ int main(int argc, char* argv[]){
 			LONG_MAX, 0, ULONG_MAX);
 
 
-	printf("Now let's try to compute these values.\n\n");
+	printf("\nNow let's try to compute these values.\n\n");
 	
-	/* Continue to add 1 until we reach the point where the stored value
-	 would roll over and then stop. This will get you the max value 
-	 stored in one direction. At first I thought I knew how this would 
-	 work but then I found my variables were mixed up...*/
+	/*For the computation part, the basic idea is to manipulate the
+	 underlying bits. Continue to increase/decrease
+	 the stored value until just before a rollover would occur. At this 
+	 point, you have reached the limit to the storage range. */
 	
 	while ( (cmax - 1) < 0 ){
 		cmax = cmax -1;
@@ -43,14 +43,30 @@ int main(int argc, char* argv[]){
 	printf("Char: %d..%d\n", cmin,cmax);
 
 	
-	while( (smin * 2) < 0 ){
-		smin = smin * 2 ;
+	while( (smin - 1)  < 0 ){
+		smin = smin - 1 ;
 	}
 	while( (smax * 2) > 0 ){
 		smax = smax*2;
 	}
-	printf("Short: %hd..%hd\n", smin, smax);
-	
+	printf("Short: %hd..%hd\n", smax, smin);
+
+	while( (imin * 2) < 0 ){
+		imin = imin * 2;
+	}
+	while( (imax * 2) > 0 ){
+		imax = imax * 2;
+	}
+	printf("Int: %d..%d\n",imin,imax*2 - 1);
+
+	while (lmin * 2 < 0){
+		lmin = lmin*2;
+	}
+
+	while( lmax *2 > 0 ){
+		lmax = lmax*2;
+	}
+	printf("Long: %ld..%ld\n", lmin, lmax*2 - 1);
 	
 	return 0;
 }
