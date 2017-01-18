@@ -1,6 +1,6 @@
 /*
- Calculator app given in book, I plan on using this blueprint to extend and
- complete the next exercises.
+ Give the basic framework, it's straightforward to extend the calculator. 
+ Add the modulus (%) operator and provisions for negative numbers.
  */
 
 #include <stdio.h>
@@ -53,6 +53,12 @@ int main(){
 			case '\n':
 				printf("\t%.8g\n", pop());
 				break;
+				
+			/* added modulus */
+			case '%':
+				op2 = pop();/* get divisor */
+				push( ((int) pop()) % ((int) op2));
+				break;
 			default:
 				printf("Error: Unknown command %s.\n",s);
 				break;
@@ -88,22 +94,46 @@ double pop( void ){
 /* getop get next operator or numeric operand */
 int getop( char s[] ){
 
-	int i, c;
+	int i, c, temp;
 
+	/* remove leading whitespace, stopping when any non-space char is 
+	 found */
 	while(( s[0] = c = getch()) == ' ' || c == '\t'){
 		;
 	}
 
-	s[1] = '\0';
+	s[1] = '\0';/* just in case it's not a number delimit the string
+		     before we return it in the next if */
 
-	if( !isdigit(c) && c != '.')
+	if( !isdigit(c) && c != '.' && c != '-'){
 		return c; /* not a number */
-	i = 0;
+	}
+
+	i = 0;/* otherwise we need to build the number */
+
+	/* negative number provision. */
+	if( c == '-' ){
+		/* check if next char is a number, if it's not then we have
+		 a subtraction sign */
+		temp = getch();
+
+		if( !isdigit(temp) ){
+			ungetch(temp);
+			return c;
+		/* otherwise it's a negative sign, add it to the string to
+		 be converted when passed to atof in NUMBER case in main */
+		}else{
+			s[i] = c;
+			i++;
+			c = getch();
+		}
+	}
+		
 	if( isdigit(c) ) /* collect integer part */
 		while(isdigit( s[++i] = c = getch())){
 			;
 		}
-	if( c == '.') /* collect integer part */
+	if( c == '.') /* collect fraction part */
 		while( isdigit(s[++i] = c = getch())){
 			;
 		}
