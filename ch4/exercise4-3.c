@@ -1,5 +1,5 @@
 /*
- Give the basic framework, it's straightforward to extend the calculator. 
+ Given the basic framework, it's straightforward to extend the calculator. 
  Add the modulus (%) operator and provisions for negative numbers.
  */
 
@@ -125,10 +125,13 @@ int getop( char s[] ){
 		}else{
 			s[i] = c;
 			i++;
+			s[i] = temp;
+			i++;
 			c = getch();
 		}
 	}
 		
+	
 	if( isdigit(c) ) /* collect integer part */
 		while(isdigit( s[++i] = c = getch())){
 			;
